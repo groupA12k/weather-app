@@ -1,7 +1,6 @@
 const API_KEY = '81f51fa1e762e8348cfbd4dfc8389f49';
 const DEFAULT_CITY = 'Hanoi';
 
-// Map OpenWeatherMap icon codes to local image files
 const ICON_MAP = {
     '01d': 'icons/01d.png', '01n': 'icons/01d.png',
     '02d': 'icons/01d.png', '02n': 'icons/01d.png',
@@ -18,7 +17,6 @@ function getLocalIcon(iconCode) {
     return ICON_MAP[iconCode] || `https://openweathermap.org/img/wn/${iconCode}.png`;
 }
 
-// Vietnamese weather description
 function translateDesc(desc) {
     const map = {
         'clear sky': 'Trời quang đãng',
@@ -41,7 +39,6 @@ function translateDesc(desc) {
     return map[desc.toLowerCase()] || desc.charAt(0).toUpperCase() + desc.slice(1);
 }
 
-// Format Vietnamese date
 function formatVietnameseDate(date) {
     const days = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
     const months = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6',
@@ -74,7 +71,6 @@ function formatForecastDate(date) {
     return `${dd}/${mm}`;
 }
 
-// Update clock every second
 function startClock() {
     function tick() {
         const now = new Date();
@@ -86,7 +82,6 @@ function startClock() {
     setInterval(tick, 1000);
 }
 
-// Fetch current weather
 async function fetchCurrentWeather(city) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric&lang=en`;
     const res = await fetch(url);
@@ -94,7 +89,6 @@ async function fetchCurrentWeather(city) {
     return res.json();
 }
 
-// Fetch 3-day forecast
 async function fetchForecast(city) {
     const url = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric&lang=en`;
     const res = await fetch(url);
@@ -122,7 +116,6 @@ function updateCurrentWeather(data) {
 }
 
 function updateForecast(data) {
-    // Get one forecast per day (noon), skip today
     const today = new Date().toLocaleDateString('en-CA');
     const dailyMap = {};
 
